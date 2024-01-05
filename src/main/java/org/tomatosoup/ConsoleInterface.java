@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -70,6 +71,16 @@ public class ConsoleInterface {
         try (Stream<String> lines = Files.lines(path)) {
             return lines.filter(s -> s.matches(builder.getRegex()))
                     .filter(s -> builder.getMandatoryLetters().stream().allMatch(c -> s.contains(c.toString())))
+                    .sorted(Comparator.comparingInt(w -> {
+                        int result = 0;
+
+                        for (int i = 0; i < w.length(); i++) {
+                            final char ch = w.charAt(i);
+                            result -= (CharsValue.values.get(i).getOrDefault(w.charAt(i), 0)) /
+                                    w.chars().filter(c -> c == ch).count();
+                        }
+                        return result;
+                    }))
                     .limit(10)
                     .collect(Collectors.toList());
         } catch (IOException e) {
