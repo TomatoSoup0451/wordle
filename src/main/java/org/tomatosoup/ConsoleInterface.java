@@ -72,8 +72,9 @@ public class ConsoleInterface {
 
     private List<String> showPossibleWords() {
         try (Stream<String> lines = Files.lines(path)) {
-            return lines.filter(s -> s.matches(builder.getRegex()))
+            return lines
                     .filter(s -> builder.getMandatoryLetters().stream().allMatch(c -> s.contains(c.toString())))
+                    .filter(s -> s.matches(builder.getRegex()))
                     .sorted(Comparator.comparingInt(w -> {
                         int result = 0;
 
