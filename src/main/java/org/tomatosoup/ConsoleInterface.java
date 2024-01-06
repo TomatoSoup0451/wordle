@@ -52,6 +52,9 @@ public class ConsoleInterface {
                     char c = sc.next().charAt(0);
                     builder.setLetterInWrongPlace(index - 1, c);
                 }
+                case 7 -> {
+                    builder.setMultipleWrongLetters(sc.next());
+                }
                 case 0 -> isEnded = true;
                 default -> {
                     System.out.println("Неизвестная команда");
@@ -76,7 +79,7 @@ public class ConsoleInterface {
 
                         for (int i = 0; i < w.length(); i++) {
                             final char ch = w.charAt(i);
-                            result -= (CharsValue.values.get(i).getOrDefault(w.charAt(i), 0)) /
+                            result -= (CharsValue.valuesWithPosition.get(i).getOrDefault(w.charAt(i), 0)) /
                                     w.chars().filter(c -> c == ch).count();
                         }
                         return result;
@@ -96,6 +99,7 @@ public class ConsoleInterface {
                 "4 - Показать известную информацию\n" +
                 "5 - Указать одну букву на своем месте\n" +
                 "6 - Указать одну букву не на своем месте\n" +
+                "7 - Указать несколько букв не на своем месте\n" +
                 "0 - Выход");
     }
 

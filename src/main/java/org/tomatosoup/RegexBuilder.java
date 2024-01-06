@@ -90,4 +90,14 @@ public class RegexBuilder {
         addMandatoryLetter(c);
         wrongPositionLetters.put(i, c);
     }
+
+    public void setMultipleWrongLetters(String word) {
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+            if (Character.isLetter(c)) {
+                addMandatoryLetter(c);
+                wrongPositionLetters.put(i, c);
+            }
+        }
+    }
 }
